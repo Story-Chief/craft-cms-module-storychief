@@ -45,7 +45,6 @@ class StoryChief_WebhookController extends BaseController {
 	}
 
 	protected function validateCallback() {
-		return true;
 		$json = $this->payload;
 		if (!is_array($json)) {
 			return false;
