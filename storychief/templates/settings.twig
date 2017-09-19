@@ -1,0 +1,136 @@
+<input type="hidden" name="redirect" id="redirect" value="{{ 'settings/plugins/storychief' }}">
+{% import "_includes/forms" as forms %}
+
+<h2>Connect</h2><a name="connect"></a>
+<p>Step 1: Connect your website to Story Chief</p>
+{{ forms.passwordField({
+    label: "Encryption key"|t,
+    required: true,
+    id: 'key',
+    name: 'key',
+    value: settings.key,
+    instructions: "Your encryption key is given when you add a CraftCMS destination on Story Chief"|t,
+    errors: settings.getErrors('key')
+}) }}
+
+{{ forms.textField({
+    label: "Website url"|t,
+    id: 'endpoint',
+    value: siteUrl,
+    readonly: true,
+    instructions: "Copy past this url in your CraftCMS destination configuration on Story Chief"|t,
+}) }}
+<hr>
+
+
+<h2>Entry Type</h2><a name="entry_type"></a>
+<p>Step 2: Choose an entry type where Story Chief must save stories to</p>
+
+{{ forms.selectField({
+    label: "Section" | t,
+    instructions: 'Choose the section you want to save your stories to.' | t,
+    id: 'section',
+    name: 'section',
+    value: settings.section,
+    options: [{ label: 'Select', value: '' }] | merge(craft.storyChief.getStoryChiefSections()),
+    required: true,
+}) }}
+
+{% if settings.section %}
+    {{ forms.selectField({
+        label: "Entry Type" | t,
+        instructions: 'Choose the Entry Type you want to save your feed data into.' | t,
+        id: 'entry_type',
+        name: 'entry_type',
+        value: settings.entry_type,
+        options: [{ label: 'Select', value: '' }] | merge(craft.storyChief.getStoryChiefEntryTypes(settings.section)),
+        required: true,
+    }) }}
+{% endif %}
+
+<div class="field">
+    <button type="submit" class="btn submit">Update</button>
+</div>
+
+<hr>
+
+<h2>Field Mapping</h2><a name="field_mapping"></a>
+{% if settings.section and settings.entry_type %}
+    <h3>Entry Settings</h3>
+    <table class="data fullwidth collapsible">
+        <thead>
+        <tr>
+            <th>Field</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="col-field">
+                <div class="field">
+                    <div class="heading">
+                        <label>Author</label>
+                    </div>
+                </div>
+            </td>
+            <td class="col-map">
+                {{ forms.selectField({
+                    id: 'author',
+                    name: 'mapping[author]',
+                    value: settings.mapping.author ?? '' ,
+                    options: craft.storyChief.getStoryChiefAuthorOptions(),
+                }) }}
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+
+    <h3>Content Fields</h3>
+    <table class="data fullwidth collapsible">
+        <thead>
+        <tr>
+            <th>Field</th>
+            <th>Story Chief element</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for field in craft.storyChief.getStoryChiefContentFields(settings.entry_type) %}
+            {% set available_options = craft.storyChief.getStoryChiefFieldOptions(field.handle) %}
+            {% if available_options %}
+                <tr>
+                    <td class="col-field">
+                        <div class="field">
+                            <div class="heading">
+                                <label class="{% if field.required %}required{% endif %}">{{ field.name }}</label>
+                                <div class="instructions">
+                                    <code>{{ field.handle }}</code>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="col-map">
+                        {{ forms.selectField({
+                            id: field.handle,
+                            name: "mapping[#{field.handle}]",
+                            value: settings.mapping[field.handle] ?? '',
+                            options: [{ label: 'Don\'t import', value: '' }] | merge(available_options),
+                            required: field.required,
+                        }) }}
+                    </td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="field">
+        <button type="submit" class="btn submit">Save</button>
+    </div>
+{% else %}
+    <p>You need to select an entry type before you can start mapping your fields</p>
+{% endif %}
+
+<script type="application/javascript">
+    document.getElementsByName('redirect')[0].value = 'settings/plugins/storychief';
+</script>
+
