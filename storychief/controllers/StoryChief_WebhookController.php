@@ -161,8 +161,8 @@ class StoryChief_WebhookController extends BaseController {
 			if (!is_null($user)) {
 				$entry->setAttribute('authorId', $user->id);
 			}
-			unset($mapping['author']);
 		}
+		unset($mapping['author']);
 
 		// Set title
 		$entry->getContent()->title = $this->payload['data']['title'];
@@ -170,6 +170,7 @@ class StoryChief_WebhookController extends BaseController {
 		// map other fields
 		foreach ($mapping as $fieldHandle => $scHandle) {
 			$field = craft()->fields->getFieldByHandle($fieldHandle);
+
 			$class = str_replace(array('Craft\\', 'FieldType'), array('\\Craft\\', 'StoryChiefFieldType'), get_class($field->getFieldType()));
 
 			if (class_exists($class)) {
