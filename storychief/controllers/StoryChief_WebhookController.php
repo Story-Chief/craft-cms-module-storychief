@@ -169,16 +169,16 @@ class StoryChief_WebhookController extends BaseController {
 
 		// map other fields
 		foreach ($mapping as $fieldHandle => $scHandle) {
-			$field = craft()->fields->getFieldByHandle($fieldHandle);
-
-			$class = str_replace(array('Craft\\', 'FieldType'), array('\\Craft\\', 'StoryChiefFieldType'), get_class($field->getFieldType()));
-
-			if (class_exists($class)) {
-				$value = $this->_filterPayloadData($scHandle);
-				if ($value) {
-					$scField = new $class();
-					if ($scField instanceof StoryChiefFieldTypeInterface) {
-						$entry->getContent()->$fieldHandle = $scField->prepFieldData($field, $value);
+			if(!empty($scHandle)){
+				$field = craft()->fields->getFieldByHandle($fieldHandle);
+				$class = str_replace(array('Craft\\', 'FieldType'), array('\\Craft\\', 'StoryChiefFieldType'), get_class($field->getFieldType()));
+				if (class_exists($class)) {
+					$value = $this->_filterPayloadData($scHandle);
+					if ($value) {
+						$scField = new $class();
+						if ($scField instanceof StoryChiefFieldTypeInterface) {
+							$entry->getContent()->$fieldHandle = $scField->prepFieldData($field, $value);
+						}
 					}
 				}
 			}

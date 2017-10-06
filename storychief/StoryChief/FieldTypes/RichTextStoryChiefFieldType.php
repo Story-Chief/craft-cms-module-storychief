@@ -4,7 +4,10 @@ class RichTextStoryChiefFieldType implements StoryChiefFieldTypeInterface {
 
 	public function supportedStorychiefFieldTypes() {
 		return [
-			'richtext'
+			'richtext',
+			'text',
+			'textarea',
+			'excerpt'
 		];
 	}
 
