@@ -8,7 +8,7 @@ class StoryChiefPlugin extends BasePlugin {
 	}
 
 	function getVersion() {
-		return '1.0.0';
+		return '1.0.2';
 	}
 
 	function getDeveloper() {
@@ -48,5 +48,6 @@ class StoryChiefPlugin extends BasePlugin {
 
 	public function init() {
 		Craft::import('plugins.storychief.StoryChief.FieldTypes.*');
+		Craft::import('plugins.storychief.StoryChief.Helpers.*');
 	}
 }

@@ -12,19 +12,38 @@ class TagsStoryChiefFieldType implements StoryChiefFieldTypeInterface {
 
 	public function prepFieldData(FieldModel $field, $fieldData) {
 		$preppedData = [];
-		foreach ($fieldData as $tagName) {
-			$tag = craft()->elements->getCriteria(ElementType::Tag, [
-				'groupId' => $field->getGroup()->id,
-				'title'   => $tagName,
-			])->first();
-			if (!$tag) {
-				$tag = new TagModel();
-				$tag->groupId = $field->getGroup()->id;
-				$tag->getContent()->title = $tagName;
 
-				craft()->tags->saveTag($tag);
+		if (empty($fieldData)) return $preppedData;
+		if (!is_array($fieldData)) $fieldData = array($fieldData);
+
+		$settings = $field->getFieldType()->getSettings();
+
+		// Get tag group id
+		$source = $settings->getAttribute('source');
+		list($type, $groupId) = explode(':', $source);
+
+		// Find existing
+		foreach ($fieldData as $tagName) {
+			$criteria = craft()->elements->getCriteria(ElementType::Tag);
+			$criteria->status = null;
+			$criteria->groupId = $groupId;
+			$criteria->title = DbHelper::escapeParam($tagName);
+
+			$elements = $criteria->ids();
+
+			$preppedData = array_merge($preppedData, $elements);
+
+			// Create the elements if not found
+			if (count($elements) == 0) {
+				$element = new TagModel();
+				$element->getContent()->title = $tagName;
+				$element->groupId = $groupId;
+
+				// Save tag
+				if (craft()->tags->saveTag($element)) {
+					$preppedData[] = $element->id;
+				}
 			}
-			$preppedData[] = $tag->id;
 		}
 
 		return $preppedData;
