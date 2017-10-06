@@ -48,5 +48,6 @@ class StoryChiefPlugin extends BasePlugin {
 
 	public function init() {
 		Craft::import('plugins.storychief.StoryChief.FieldTypes.*');
+		Craft::import('plugins.storychief.StoryChief.Helpers.*');
 	}
 }
