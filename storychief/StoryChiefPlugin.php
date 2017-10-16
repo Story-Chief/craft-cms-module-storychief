@@ -8,7 +8,7 @@ class StoryChiefPlugin extends BasePlugin {
 	}
 
 	function getVersion() {
-		return '1.0.2';
+		return '1.0.3';
 	}
 
 	function getDeveloper() {
@@ -40,6 +40,10 @@ class StoryChiefPlugin extends BasePlugin {
 		return array(
 			'storychief/webhook' => array('action' => 'storyChief/webhook/callback'),
 		);
+	}
+
+	public function getSchemaVersion() {
+		return '1.0.0';
 	}
 
 	public function getReleaseFeedUrl() {
