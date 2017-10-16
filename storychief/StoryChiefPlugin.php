@@ -42,6 +42,10 @@ class StoryChiefPlugin extends BasePlugin {
 		);
 	}
 
+	public function getSchemaVersion() {
+		return '1.0.0';
+	}
+
 	public function getReleaseFeedUrl() {
 		return 'https://raw.githubusercontent.com/Story-Chief/craft-cms-module-storychief/master/storychief/releases.json';
 	}
