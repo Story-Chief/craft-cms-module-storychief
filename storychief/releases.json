@@ -24,5 +24,13 @@
       "[Added] allow text, textarea, excerpt in RichText field type",
       "[Fixed] Tags field types"
     ]
+  },
+  {
+    "version": "1.0.3",
+    "downloadUrl": "https://github.com/Story-Chief/craft-cms-module-storychief/archive/v1.0.3.zip",
+    "date": "2017-10-16T16:55:07+02:00",
+    "notes": [
+      "[Added] Schema version to plugin settings"
+    ]
   }
 ]
