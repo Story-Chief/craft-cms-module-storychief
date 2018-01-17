@@ -42,7 +42,17 @@ class StoryChiefVariable {
 				'label' => 'Categories',
 				'name'  => 'categories',
 				'type'  => 'categories',
-			]
+			],
+			[
+				'label' => 'SEO Title',
+				'name'  => 'seo_title',
+				'type'  => 'text',
+			],
+			[
+				'label' => 'SEO Description',
+				'name'  => 'seo_description',
+				'type'  => 'textarea',
+			],
 		];
 		$settings = craft()->plugins->getPlugin('storyChief')->getSettings();
 		$custom_fields = $settings->getAttribute('custom_field_definitions');
