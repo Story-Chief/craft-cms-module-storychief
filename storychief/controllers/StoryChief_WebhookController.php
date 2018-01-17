@@ -164,6 +164,11 @@ class StoryChief_WebhookController extends BaseController {
 		}
 		unset($mapping['author']);
 
+		// Set slug
+		if(isset($this->payload['data']['seo_slug']) && !empty($this->payload['data']['seo_slug'])){
+			$entry->slug = $this->payload['data']['seo_slug'];
+		}
+
 		// Set title
 		$entry->getContent()->title = $this->payload['data']['title'];
 
@@ -218,6 +223,8 @@ class StoryChief_WebhookController extends BaseController {
 			case 'title':
 			case 'content':
 			case 'excerpt':
+			case 'seo_title':
+			case 'seo_description':
 				// returns value
 				if (isset($this->payload['data'][$scHandle])) {
 					return $this->payload['data'][$scHandle];
