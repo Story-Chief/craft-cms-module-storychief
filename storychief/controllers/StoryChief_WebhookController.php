@@ -93,6 +93,7 @@ class StoryChief_WebhookController extends BaseController {
 		$entry = $this->_map($entry);
 
 		craft()->entries->saveEntry($entry);
+        craft()->templateCache->deleteAllCaches();
 
 		return $this->_appendMac([
 			'id'        => $entry->id,
