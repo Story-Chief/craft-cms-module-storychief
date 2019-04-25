@@ -1,6 +1,8 @@
 # craft-cms-module-storychief
 A Craft plugin for integrating Story Chief into Craft CMS.
 
+For CRAFT CMS 3.x [use this plugin instead](https://github.com/Story-Chief/craft-cms-module-storychief-v3).
+
 ## Features
 - Sync your Story Chief articles to a craft entry type
 - Define your field mapping as you see fit
