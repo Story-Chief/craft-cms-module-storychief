@@ -1,0 +1,25 @@
+{
+  "name": "storychief/craft-cms-module-storychief-v3",
+  "description": "A module to integrate StoryChief with Craft CMS",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "Craft CMS",
+    "Craft",
+    "CMS",
+    "plugin",
+    "StoryChief"
+  ],
+  "homepage": "https://storychief.io",
+  "authors": [
+    {
+      "name": "Gregory Claeyssens",
+      "email": "support@storychief.io"
+    },
+    {
+      "name": "Gustavo Caetano",
+      "email": "souljacker@gmail.com"
+    }
+  ],
+  "require": {}
+}
