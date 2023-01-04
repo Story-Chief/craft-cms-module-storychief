@@ -21,5 +21,6 @@
       "email": "souljacker@gmail.com"
     }
   ],
-  "require": {}
+  "require": {},
+  "abandoned": true
 }
